@@ -7,8 +7,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-           <code>Work In Progres </code> 
-           <p> Stay Tuned </p>
+           <code> Convert from Text to Speech </code> 
+           <p> With a click of a button </p>
+           <input type="text" />
+           <button>Convert</button>
         </p>
         <a
           className="App-link"
@@ -18,6 +20,7 @@ function App() {
         >
           About Our Project
         </a>
+        <h2> 📝 🎧 </h2> 
       </header>
     </div>
   );
