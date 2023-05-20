@@ -6,6 +6,6 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/summary")
+@app.route("/summary", methods=["POST"])
 def summary():
-    return render_template("summary.html", input=request.args.get("input"))
+    return render_template("summary.html", input=request.form.get("input"))
