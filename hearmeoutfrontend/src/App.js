@@ -1,11 +1,21 @@
+import React, { useState } from "react"; 
 import logo from './HearMeOut-1.png';
 import './App.css';
+import { Login } from "./Login";
+import { Register } from "./Register";
 
 function App() {
+  const [currentForm, setCurrentForm] = useState('login');
+  const toggleForm = (formName) => {
+    setCurrentForm(formName); 
+  }
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        {
+        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
+      }
         <p>
            <code> Convert from Text to Speech </code> 
            <p> With a click of a button </p>
