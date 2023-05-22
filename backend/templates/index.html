@@ -6,16 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Main Page</title>
-        <link rel="stylesheet" href="style.css">
+        <!--link rel="stylesheet" href="style.css"-->
     </head>
     <body>
         <h1>HearMeOut Text Summariser</h1>
         <p>Enter your text in the input field below</p>
-        <script src="index.js"></script>
-        <form action="/summary" method="get">
+        <!--script src="index.js"></script-->
+        <form action="/" method="post">
             <textarea name="input" autocomplete="off" autofocus placeholder="Enter Text" type="text" rows="10" cols="50"></textarea>
             <button type="submit">Summarise</button>
-
         </form>
+        <h1>Submitted Form Data</h1>
+        <h2>Raw Input received as:</h2>
+        <div style="white-space: pre-wrap;">{{ input }}</div>
+        <h2>Summarized Input:</h2>
+        <div style="white-space: pre-wrap;">{{ output }}</div>
+        <h2>Audio File</h2>
+        <audio
+        controls
+        src={{ url_for('static', filename=audio) }}>
+            <a href={{ url_for('static', filename=audio) }}>
+                Download audio
+            </a>
+        </audio>
     </body>
 </html>
