@@ -16,21 +16,15 @@ function App() {
         {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
       }
-        <p>
-           <code> Convert from Text to Speech </code> 
-           <p> With a click of a button </p>
-           <input type="text" />
-           <button>Convert</button>
-        </p>
         <a
           className="App-link"
           href="https://github.com/YZDavid/HearMeOut"
           target="_blank"
           rel="noopener noreferrer"
         >
-          About Our Project
+        <h4>About Our Project</h4>
         </a>
-        <h2> 📝 🎧 </h2> 
+        <h6> 📝 🎧 </h6> 
       </header>
     </div>
   );
