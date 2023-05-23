@@ -13,7 +13,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/summary", methods=["POST", "GET"])
 def summary():
     input = request.form.get("input")
     output = summarizer(input, max_length=250, min_length=100, do_sample=False)[0]['summary_text']
@@ -23,4 +23,4 @@ def summary():
     engine.runAndWait()
     # pyttsx3 is only able to create output files such as 'test.mp3' for some reason, just output as such and use os library to rename file
     os.rename('test.mp3', f'static/{filename}')
-    return render_template("index.html", input=input, output=output, audio=filename)
+    return render_template("summary.html", input=input, output=output, audio=filename)
