@@ -14,4 +14,10 @@
             Download audio
         </a>
     </audio>
+    <form action="/saved" method="post">
+        <button type="submit">Save conversion</button>
+    </form>
+
+    <a href="{{ url_for('index') }}" title="Back to converter">Back to converter</a> 
+    <a href="{{ url_for('saved') }}" title="View saved conversions">View saved conversions</a> 
 {% endblock %}
