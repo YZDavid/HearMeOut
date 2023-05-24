@@ -3,6 +3,10 @@ import logo from './HearMeOut-1.png';
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
+// import { Routes, Route, useNavigate } from "react-router-dom";
+// import { StyledContainer } from "./Components/Styles";
+
+// import Home from './Components/Styles/Home'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
