@@ -6,6 +6,7 @@ import { StyledTitle, StyledSubTitle, Avatar,
     
     //Logo
     import Logo from "./../assets/HearMeOutLogo.png"
+
     
     const Dashboard = () => {
         return (
@@ -22,15 +23,15 @@ import { StyledTitle, StyledSubTitle, Avatar,
                 <Avatar image={Logo} /> 
             </div>
             <StyledFormArea bg={colors.dark2}>
-                <StyledTitle size={65}>
-                    Welcome, User
+                <StyledTitle size={12}>
+                <h1> Let HMO do the talking </h1>
+                <input type="etext"/> 
+                <button> Convert </button>
                 </StyledTitle>
-
                 <ButtonGroup>
-                    <StyledButton to="#" >Logout</StyledButton>
+                    <StyledButton to="/login" >Logout</StyledButton>
                 </ButtonGroup>
             </StyledFormArea>
-            
           </div>
         )
     }
