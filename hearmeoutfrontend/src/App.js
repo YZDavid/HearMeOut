@@ -1,37 +1,42 @@
-import React, { useState } from "react"; 
-import logo from './HearMeOut-1.png';
-import './App.css';
-import { Login } from "./Login";
-import { Register } from "./Register";
-// import { Routes, Route, useNavigate } from "react-router-dom";
-// import { StyledContainer } from "./Components/Styles";
+// Pages 
+import Home from './pages/Home';
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
-// import Home from './Components/Styles/Home'
+
+// Styled Components 
+import { StyledContainer } from './components/Styles';
+
+import React from 'react';
+
+//Loader css 
+import {
+    BrowserRouter as Router, Switch, Route
+} from 'react-router-dom';
+
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-  const toggleForm = (formName) => {
-    setCurrentForm(formName); 
-  }
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {
-        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
-      }
-        <a
-          className="App-link"
-          href="https://github.com/YZDavid/HearMeOut"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        <h4>About Our Project</h4>
-        </a>
-        <h6> 📝 🎧 </h6> 
-      </header>
-    </div>
-  );
+    return (
+      <Router>
+        <StyledContainer>
+          <Switch>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </StyledContainer>
+      </Router>
+    );
 }
 
-export default App;
+export default App; 

@@ -7,7 +7,7 @@ import {sessionService} from 'redux-react-session';
 const initialState = {};
 const middlewares = [thunk];
 
-const store = createStore(rootReducer, initialState, composer(applyMiddleware(...middlewares)));
+const store = createStore(rootReducer, initialState, compose(applyMiddleware(...middlewares)));
 
 sessionService.initSessionService(store);
 
