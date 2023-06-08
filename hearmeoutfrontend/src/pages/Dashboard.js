@@ -29,7 +29,7 @@ import { StyledTitle, StyledSubTitle, Avatar,
                 <button> Convert </button>
                 </StyledTitle>
                 <ButtonGroup>
-                    <StyledButton to="/login" >Logout</StyledButton>
+                    <StyledButton to="/Home" >Logout</StyledButton>
                 </ButtonGroup>
             </StyledFormArea>
           </div>

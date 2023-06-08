@@ -25,10 +25,14 @@ const Home = () => {
             Welcome to HearMeOut
         </StyledTitle>
         <StyledSubTitle size={27}>
-            Feel free to explore our page 
+           Ready to start hearing ?
         </StyledSubTitle>
 
-        <ButtonGroup><StyledButton to="/login"> Login </StyledButton>
+        <ButtonGroup>
+        <StyledButton to="/login"> Login </StyledButton>
+
+        <StyledButton to="/dashboard"> Guest Login </StyledButton>
+
         <StyledButton to="/signup"> Signup </StyledButton>
         </ButtonGroup>
       </div>
