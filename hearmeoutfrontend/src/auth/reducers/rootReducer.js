@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
 // session
 import {sessionReducer} from "redux-react-session"

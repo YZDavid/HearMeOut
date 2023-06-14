@@ -5,7 +5,7 @@ import App from './App';
 import './App.css'
 
 // auth stuff
-import {Provider, provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import store from "./auth/store";
 
 
@@ -15,7 +15,8 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
