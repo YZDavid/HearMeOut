@@ -2,13 +2,26 @@ import { StyledTitle, StyledSubTitle, Avatar,
     StyledButton, ButtonGroup,
     StyledFormArea, colors } from "./../components/Styles";
     
-    import React from 'react';
+    import React, { useState } from 'react';
     
     //Logo
     import Logo from "./../assets/HearMeOutLogo.png"
 
     
     const Dashboard = () => {
+        const [inputText, setInputText] = useState('');
+        const [convertedText, setConvertedText] = useState('');
+
+        const handleInputChange = (e) => {
+            setInputText(e.target.value);
+  };
+
+  const handleConvertClick = () => {
+    // Perform your conversion logic here
+    const converted = inputText.toUpperCase();
+    setConvertedText(converted);
+  };
+
         return (
           <div>
             <div styles={{
