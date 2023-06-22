@@ -15,6 +15,10 @@ import {
     BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
 
+// auth & redux
+import AuthRoute from "./components/AuthRoute";
+import BasicRoute from "./components/BasicRoute";
+import { connect } from "react-redux";
 
 function App() {
     return (
