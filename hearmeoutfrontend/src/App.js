@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Convert from "./pages/Convert";
 
 
 // Styled Components 
@@ -27,6 +28,9 @@ function App() {
           <Switch>
             <Route path="/signup">
               <Signup />
+            </Route>
+            <Route path="/convert">
+              <Convert />
             </Route>
             <Route path="/login">
               <Login />

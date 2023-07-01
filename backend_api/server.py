@@ -34,7 +34,7 @@ def conversions():
         }
 
         data.append(new_instance)
-        return jsonify(data), 201
+        return jsonify(new_instance), 201
     
 @app.route('/conversions/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def conversionByID(id):
@@ -43,6 +43,12 @@ def conversionByID(id):
             if entry['id'] == int(id):
                 return jsonify(entry), 200
         return 'Not Found', 404
+    
+    if request.method == 'DELETE':
+        for i in range(len(data)):
+            if data[i]['id'] == id:
+                data.pop(i)
+                return '', 204
 
 empty = []
 

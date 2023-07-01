@@ -39,7 +39,11 @@ import { StyledTitle, StyledSubTitle, Avatar,
                 <StyledTitle size={12}>
                 <h1> Let HMO do the talking </h1>
                 <input type="etext"/> 
-                <button> Convert </button>
+
+        <ButtonGroup>
+        <StyledButton to="/Convert"> Convert </StyledButton>
+        </ButtonGroup>
+
                 </StyledTitle>
                 <ButtonGroup>
                     <StyledButton to="/Home" >Logout</StyledButton>

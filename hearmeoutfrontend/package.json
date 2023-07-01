@@ -2,6 +2,7 @@
   "name": "hearmeoutfrontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:5000/conversions",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -48,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
