@@ -17,7 +17,7 @@ class Output(db.Model):
     input_field = db.Column(db.Text, nullable=False)
     output_field = db.Column(db.Text, nullable=False)
     audio_path = db.Column(db.String(200))
-    date = db.Column(db.DateTime)    
+    date = db.Column(db.DateTime)
 
 INPUT = None
 OUTPUT = None
