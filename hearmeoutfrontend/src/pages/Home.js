@@ -25,7 +25,7 @@ const Home = () => {
             Welcome to HearMeOut
         </StyledTitle>
         <StyledSubTitle size={27}>
-           Ready to start hearing111 ?
+           Ready to start hearing?
         </StyledSubTitle>
 
         <ButtonGroup>

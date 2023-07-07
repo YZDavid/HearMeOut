@@ -1,57 +1,67 @@
-import { StyledTitle, StyledSubTitle, Avatar,
-    StyledButton, ButtonGroup,
-    StyledFormArea, colors } from "./../components/Styles";
-    
-    import React, { useState } from 'react';
-    
-    //Logo
-    import Logo from "./../assets/HearMeOutLogo.png"
+import React, { useState } from 'react';
+import axios from 'axios';
+import {
+  StyledContainer,
+  StyledTitle,
+  StyledTextBox,
+  StyledButton,
+  StyledDisplayBox,
+  StyledLogoutButton,
+  ErrorMsg
+} from '../components/Styles1';
 
-    
-    const Dashboard = () => {
-        const [inputText, setInputText] = useState('');
-        const [convertedText, setConvertedText] = useState('');
+function Dashboard() {
+  const [text, setText] = useState('');
+  const [convertedText, setConvertedText] = useState('');
+  const [error, setError] = useState('');
 
-        const handleInputChange = (e) => {
-            setInputText(e.target.value);
+  const handleLogout = () => {
+    // Perform logout operation, such as redirecting to the login page or clearing user session
+    // Add your logout logic here
   };
 
-  const handleConvertClick = () => {
-    // Perform your conversion logic here
-    const converted = inputText.toUpperCase();
-    setConvertedText(converted);
-  };
-
-        return (
-          <div>
-            <div styles={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                backgroundColor: "transparent",
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-            }} >
-                <Avatar image={Logo} /> 
-            </div>
-            <StyledFormArea bg={colors.dark2}>
-                <StyledTitle size={12}>
-                <h1> Let HMO do the talking </h1>
-                <input type="etext"/> 
-
-        <ButtonGroup>
-        <StyledButton to="/Convert"> Convert </StyledButton>
-        </ButtonGroup>
-
-                </StyledTitle>
-                <ButtonGroup>
-                    <StyledButton to="/Home" >Logout</StyledButton>
-                </ButtonGroup>
-            </StyledFormArea>
-          </div>
-        )
+  const handleConvert = async () => {
+    if (text.trim() === '') {
+      // Handle empty input
+      return;
     }
-    
-    export default Dashboard; 
-    
+
+    try {
+      const response = await axios.post('/convert', { text });
+      const { convertedText } = response.data;
+      setConvertedText(convertedText);
+    } catch (error) {
+      setError('Conversion failed.');
+      console.error(error);
+    }
+  };
+
+  return (
+    <StyledContainer>
+      <div>
+        <StyledTitle>Welcome to HearMeOut</StyledTitle>
+      </div>
+      <div>
+        <StyledTextBox
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Paste or type your text here..."
+        />
+        <div>
+        </div>
+        {error && <ErrorMsg>{error}</ErrorMsg>}
+        <div>
+          <StyledButton onClick={handleConvert}>Convert</StyledButton>
+        </div>
+        <StyledDisplayBox
+          value={convertedText}
+          readOnly
+          placeholder="Converted text will appear here"
+        />
+      </div>
+      <StyledLogoutButton onClick={handleLogout}>Logout</StyledLogoutButton>
+    </StyledContainer>
+  );
+}
+
+export default Dashboard;

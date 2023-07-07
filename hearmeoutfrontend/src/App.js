@@ -2,9 +2,8 @@
 import Home from './pages/Home';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
 import Convert from "./pages/Convert";
-
+import Dashboard from "./pages/Dashboard";
 
 // Styled Components 
 import { StyledContainer } from './components/Styles';
@@ -20,6 +19,7 @@ import {
 import AuthRoute from "./components/AuthRoute";
 import BasicRoute from "./components/BasicRoute";
 import { connect } from "react-redux";
+
 
 function App() {
     return (
