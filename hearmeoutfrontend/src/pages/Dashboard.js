@@ -27,7 +27,7 @@ function Dashboard() {
     }
 
     try {
-      const response = await axios.post('/convert', { text });
+      const response = await axios.post('/conversions', { 'input': text });
       const { convertedText } = response.data;
       setConvertedText(convertedText);
     } catch (error) {
