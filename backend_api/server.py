@@ -30,7 +30,15 @@ def conversions():
         return '', 404
     
     if request.method == 'POST':
-        input = request.form['input']
+        if request.form.get('input') == None:
+            try:
+                input = request.get_json(force=True)
+                print(input)
+                input = input['input']
+            except:
+                return 'Please provide key value pair with "input" as the key', 500
+        else:
+            input = request.form.get('input')
         output = input[:20]
         query = """
             INSERT INTO conversions (raw_input, summary_output)
@@ -40,7 +48,7 @@ def conversions():
         conn.commit()
         return jsonify({'id':cursor.lastrowid}), 200
     
-@app.route('/conversions/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/conversions/<int:id>', methods=['GET', 'DELETE'])
 def conversionByID(id):
     conn = db_connection()
     cursor = conn.cursor()
