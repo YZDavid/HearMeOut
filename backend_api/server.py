@@ -28,25 +28,32 @@ def conversions():
         if len(res) != 0:
             return jsonify(res), 200
         return '', 404
-    
+
     if request.method == 'POST':
-        if request.form.get('input') == None:
+        if request.form.get('input') is None:
             try:
-                input = request.get_json(force=True)
-                print(input)
-                input = input['input']
+                input_data = request.get_json(force=True)
+                print(input_data)
+                input_text = input_data['input']
             except:
                 return 'Please provide key value pair with "input" as the key', 500
         else:
-            input = request.form.get('input')
-        output = input[:20]
+            input_text = request.form.get('input')
+        output = input_text[:20]
         query = """
             INSERT INTO conversions (raw_input, summary_output)
-            VALUES (?, ?)    
+            VALUES (?, ?)
         """
-        cursor.execute(query, (input, output))
+        cursor.execute(query, (input_text, output))
         conn.commit()
-        return jsonify({'id':cursor.lastrowid}), 200
+        conversion_id = cursor.lastrowid
+
+        # Retrieve the conversion with the summarized output
+        cursor.execute("SELECT * FROM conversions WHERE id = ?", (conversion_id,))
+        res = cursor.fetchone()
+        res_obj = dict(id=res[0], input=res[1], output=res[2])
+
+        return jsonify(res_obj), 200
     
 @app.route('/conversions/<int:id>', methods=['GET', 'DELETE'])
 def conversionByID(id):

@@ -25,17 +25,17 @@ function Dashboard() {
       // Handle empty input
       return;
     }
-
+  
     try {
       const response = await axios.post('/conversions', { 'input': text });
-      const { convertedText } = response.data;
-      setConvertedText(convertedText);
+      const { output } = response.data; // Update the field name to match the backend response
+      setConvertedText(output);
     } catch (error) {
       setError('Conversion failed.');
       console.error(error);
     }
   };
-
+  
   return (
     <StyledContainer>
       <div>
