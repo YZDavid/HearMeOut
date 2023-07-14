@@ -123,7 +123,7 @@ return (
           Already have an account? <TextLink to="/login">Login</TextLink>
         </ExtraText>
       </StyledFormArea>
-      <CopyrightText>All rights reserved &copy;2020</CopyrightText>
+      <CopyrightText>All rights reserved &copy;2023</CopyrightText>
     </div>
   );
 };
