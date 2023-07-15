@@ -30,21 +30,21 @@ def conversions():
         return jsonify(res), 200
     
     if request.method == 'POST':
-        if request.form.get('input') == None:
+        if request.form.get('input') is None:
             try:
-                input = request.get_json(force=True)
-                print(input)
-                input = input['input']
+                input_data = request.get_json(force=True)
+                print(input_data)
+                input_text = input_data['input']
             except:
                 return 'Please provide key value pair with "input" as the key', 500
         else:
-            input = request.form.get('input')
-        output = input[:20]
+            input_text = request.form.get('input')
+        output = input_text[:20]
         query = """
             INSERT INTO conversions (raw_input, summary_output)
-            VALUES (?, ?)    
+            VALUES (?, ?)
         """
-        cursor.execute(query, (input, output))
+        cursor.execute(query, (input_text, output))
         conn.commit()
         return jsonify({'id':cursor.lastrowid, 'input':input, 'output':output}), 200
     
