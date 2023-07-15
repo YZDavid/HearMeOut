@@ -25,9 +25,9 @@ def conversions():
             dict(id=row[0], input=row[1], output=row[2])
             for row in cursor.fetchall()
         ]
-        if len(res) != 0:
-            return jsonify(res), 200
-        return '', 404
+        if len(res) == 0:
+            return '', 404
+        return jsonify(res), 200
     
     if request.method == 'POST':
         if request.form.get('input') == None:
@@ -46,7 +46,7 @@ def conversions():
         """
         cursor.execute(query, (input, output))
         conn.commit()
-        return jsonify({'id':cursor.lastrowid}), 200
+        return jsonify({'id':cursor.lastrowid, 'input':input, 'output':output}), 200
     
 @app.route('/conversions/<int:id>', methods=['GET', 'DELETE'])
 def conversionByID(id):
