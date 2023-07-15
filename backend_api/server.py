@@ -46,7 +46,7 @@ def conversions():
         """
         cursor.execute(query, (input_text, output))
         conn.commit()
-        return jsonify({'id':cursor.lastrowid, 'input':input, 'output':output}), 200
+        return jsonify({'id':cursor.lastrowid, 'input':input_text, 'output':output}), 200
     
 @app.route('/conversions/<int:id>', methods=['GET', 'DELETE'])
 def conversionByID(id):
