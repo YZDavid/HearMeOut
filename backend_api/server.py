@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import sqlite3
+import converter
 
 app = Flask(__name__)
 
@@ -39,7 +40,7 @@ def conversions():
                 return 'Please provide key value pair with "input" as the key', 500
         else:
             input_text = request.form.get('input')
-        output = input_text[:20]
+        output = converter.summary2(input_text, "news")
         query = """
             INSERT INTO conversions (raw_input, summary_output)
             VALUES (?, ?)
