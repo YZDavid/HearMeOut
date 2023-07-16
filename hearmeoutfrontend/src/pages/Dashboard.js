@@ -35,11 +35,11 @@ function Dashboard() {
       console.error(error);
     }
   };
-  
+
   return (
     <StyledContainer>
       <div>
-        <StyledTitle>Welcome to HearMeOut</StyledTitle>
+        <StyledTitle>Welcome to HearMeOut </StyledTitle>
       </div>
       <div>
         <StyledTextBox
