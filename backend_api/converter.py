@@ -2,7 +2,7 @@ from transformers import pipeline
 import math
 
 MODELS = {
-    'news': ('ccdv/lsg-bart-base-16384-mediasum', 16384),
+    'news': ('facebook/bart-large-cnn', 16384),
     'book': ('pszemraj/led-base-book-summary', 16384),
     'general': ('google/bigbird-pegasus-large-bigpatent', 4096),
     'scientific': ('google/bigbird-pegasus-large-arxiv', 4096)
