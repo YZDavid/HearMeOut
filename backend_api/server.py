@@ -25,10 +25,10 @@ def conversions():
             dict(id=row[0], input=row[1], output=row[2])
             for row in cursor.fetchall()
         ]
-        if len(res) != 0:
-            return jsonify(res), 200
-        return '', 404
-
+        if len(res) == 0:
+            return '', 404
+        return jsonify(res), 200
+    
     if request.method == 'POST':
         if request.form.get('input') is None:
             try:
@@ -46,14 +46,7 @@ def conversions():
         """
         cursor.execute(query, (input_text, output))
         conn.commit()
-        conversion_id = cursor.lastrowid
-
-        # Retrieve the conversion with the summarized output
-        cursor.execute("SELECT * FROM conversions WHERE id = ?", (conversion_id,))
-        res = cursor.fetchone()
-        res_obj = dict(id=res[0], input=res[1], output=res[2])
-
-        return jsonify(res_obj), 200
+        return jsonify({'id':cursor.lastrowid, 'input':input_text, 'output':output}), 200
     
 @app.route('/conversions/<int:id>', methods=['GET', 'DELETE'])
 def conversionByID(id):
