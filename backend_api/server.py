@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import sqlite3
 import converter
 
@@ -40,7 +40,7 @@ def conversions():
                 return 'Please provide key value pair with "input" as the key', 500
         else:
             input_text = request.form.get('input')
-        output = converter.summary2(input_text, "news")
+        output = converter.summary2(input_text, "general")
         query = """
             INSERT INTO conversions (raw_input, summary_output)
             VALUES (?, ?)
@@ -66,6 +66,11 @@ def conversionByID(id):
         conn.execute(query, (id,))
         conn.commit()
         return jsonify({'deleted_id': id}), 200
+    
+@app.route('/audio/<filename>')
+def audio(filename):
+    return send_file(f'audio_files/{filename}.mp3')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
