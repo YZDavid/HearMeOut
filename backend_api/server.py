@@ -40,7 +40,7 @@ def conversions():
                 return 'Please provide key value pair with "input" as the key', 500
         else:
             input_text = request.form.get('input')
-        output = converter.summary2(input_text, "general")
+        output = converter.summary(input_text)
         query = """
             INSERT INTO conversions (raw_input, summary_output)
             VALUES (?, ?)
