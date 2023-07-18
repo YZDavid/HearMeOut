@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    {% if title %}
+    <title>{{ title }} - HearMeOut</title>
+    {% else %}
+    <title>Welcome to HearMeOut!</title>
+    {% endif %}
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+    <link rel="icon" href="favicon.png">
+</head>
+<body>
+    <div>HearMeOut: 
+        <a href="/index">Home</a>
+        <a href="/login">Login</a>
+    </div>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

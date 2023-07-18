@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Hello, {{user.username}}</h1>
+    {% for conv in conversions %}
+    <div>
+        <p><b>Input:</b> {{ conv.input }}</p>
+        <p><b>Output:</b> {{ conv.output }}</p>
+    </div>
+    {% endfor %}
+{% endblock %}
