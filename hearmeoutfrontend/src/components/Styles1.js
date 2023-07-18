@@ -1,5 +1,3 @@
-
-
 import styled from "styled-components";
 
 // background
@@ -97,4 +95,38 @@ export const ErrorMsg = styled.div`
   color: red;
   margin-top: 5px;
   text-align: center;
+`;
+
+export const StyledConversionHistory = styled.div`
+  width: 400px;
+  padding: 10px;
+  background-color: ${colors.light1};
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
+
+export const StyledConversionItem = styled.li`
+  cursor: pointer;
+  padding: 10px;
+  background-color: ${(props) => (props.selected ? colors.light2 : 'transparent')};
+
+  &:hover {
+    background-color: ${colors.light2};
+  }
+`;
+
+export const StyledDropdown = styled.select`
+  width: 400px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: ${colors.light2};
+  color: ${colors.dark1};
+`;
+
+export const StyledSelectedConversion = styled.div`
+  padding: 10px;
+  background-color: ${colors.light1};
+  border-radius: 5px;
+  margin-top: 10px;
 `;
