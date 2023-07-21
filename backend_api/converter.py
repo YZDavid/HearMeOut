@@ -44,9 +44,9 @@ def summary(text):
         output.append(tokenizer.decode(*generated, skip_special_tokens=True))
     return ' '.join(output)
 
-def make_audio(text, filename):
+def make_audio(text, filepath):
     tts_file = gTTS(text, lang="en")
-    tts_file.save(f"summary_files/{filename}.mp3")
+    tts_file.save(filepath)
 
 
 
