@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom'; // Import the useHistory hook
 import {
   StyledContainer,
   StyledTitle,
   StyledTextBox,
   StyledButton,
   StyledDisplayBox,
-  StyledLogoutButton,
+  StyledLogoutButton, // Assuming you have a custom styled component for the Logout button
   ErrorMsg,
   StyledConversionHistory,
   StyledConversionItem,
@@ -15,6 +16,7 @@ import {
 } from '../components/Styles1';
 
 function Dashboard() {
+  const history = useHistory(); // Initialize the useHistory hook
   const [text, setText] = useState('');
   const [convertedText, setConvertedText] = useState('');
   const [error, setError] = useState('');
@@ -38,6 +40,9 @@ function Dashboard() {
   const handleLogout = () => {
     // Perform logout operation, such as redirecting to the login page or clearing user session
     // Add your logout logic here
+
+    // Redirect the user to the /Home page upon logout
+    history.push('/Home');
   };
 
   const handleConvert = async () => {
