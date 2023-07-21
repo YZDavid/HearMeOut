@@ -17,3 +17,4 @@ torch==2.0.1
 sentencepiece==0.1.99
 nltk==3.8.1
 gTTS==2.3.2
+gunicorn==21.2.0
