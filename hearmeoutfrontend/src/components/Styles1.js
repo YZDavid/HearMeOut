@@ -130,3 +130,21 @@ export const StyledSelectedConversion = styled.div`
   border-radius: 5px;
   margin-top: 10px;
 `;
+
+export const StyledAudioLink = styled.a`
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: ${colors.theme};
+  color: ${colors.primary};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+  text-decoration: none;
+`;
+
+export const StyledAudioPlayer = styled.audio`
+  width: 100%;
+  margin-top: 10px;
+`;

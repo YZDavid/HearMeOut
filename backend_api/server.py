@@ -1,3 +1,4 @@
+# server.py
 from flask import Flask, request, jsonify, send_file
 import sqlite3
 import converter
@@ -37,12 +38,12 @@ def conversions():
             try:
                 input_data = request.get_json(force=True)
                 input_text = input_data['input']
-                create_audio = input_data.get('audio')
+                create_audio = input_data.get('audio', False)  # Set default to False if not provided
             except:
                 return 'Please provide key value pair with "input" as the key', 500
         else:
             input_text = request.form.get('input')
-            create_audio = request.form.get('audio')
+            create_audio = request.form.get('audio', False)  # Set default to False if not provided
 
         # Runs the input through the converter summary function
         output = converter.summary(input_text)
