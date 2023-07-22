@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Previous Summaries</h1>
+    <hr>
+    {% if past_conversions|length == 0 %}
+    <div>
+        <p>No previous summaries.</p>
+        <a type="submit" class="btn btn-primary" href="/summariser">Get Started</a>
+    </div>
+    {% endif %}
+    {% for conv in past_conversions %}
+    <div>
+        <p><b>Input:</b> {{ conv.input }}</p>
+        <p><b>Output:</b> {{ conv.output }}</p>
+        {% if conv.filename %}
+            <p><b>Audio:</b></p>
+            <audio controls src="{{ url_for('static', filename='audio/') }}{{ conv.filename }}.mp3">
+                <a href="{{ url_for('static', filename='audio/') }}{{ conv.filename }}.mp3">
+                    Download audio
+                </a>
+            </audio>
+        {% endif %}
+        <p><b>Converted on:</b> {{ conv.timestamp }}</p>
+
+        <!-- Button trigger modal for delete -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+            <span class="bi bi-trash3-fill"></span>&nbsp;Delete
+        </button>
+        
+        <!-- Modal to delete -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+                </div>
+                <div class="modal-body">
+                Do you want to delete this summary?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a type="button" class="btn btn-danger" href="/delete/{{ conv.id }}">Delete</a>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock %}
