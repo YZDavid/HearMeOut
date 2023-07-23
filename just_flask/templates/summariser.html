@@ -5,10 +5,46 @@
     <br>
     <div class="container">
         <form class="row g-3" action="/output" id="input" method="post">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="audio" name="audio" checked>
-                <label class="form-check-label" for="audio" name="audio">Audio</label>
+
+            <!-- Collapsible settings component -->
+            <p>
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="bi bi-gear-fill"></span>&nbsp;Settings
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="col-md-6">
+                    <div class="card card-body">
+                    <b>Audio options</b>
+                    <p>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="audio" name="audio" checked>
+                            <label class="form-check-label" for="audio" name="audio">Generate Audio File</label>
+                        </div>
+                    </p>
+                    <b>Summariser Settings</b>
+                    <p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="summariseType" id="summariseType1" onclick="document.getElementById('percentage').disabled = true;" checked>
+                            <label class="form-check-label" for="summariseType1">
+                              Auto Summarise
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="summariseType" id="summariseType2" onclick="document.getElementById('percentage').disabled = false;">
+                            <label class="form-check-label" for="summariseType2">
+                              Percentage of Original
+                            </label>
+                        </div>
+                    </p>
+                        <div class="form-group col-md-3">
+                            <input type="number" class="form-control" id="percentage" value="25" name="percentage" min="5" max="95" disabled required>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- End of collapse component -->
+
             <div class="col-md-12">
                 <label for="input" class="form-label"><b>Enter text:</b></label>
                 <textarea class="form-control" name="input" id="input" rows="15" required></textarea>

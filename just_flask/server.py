@@ -40,7 +40,9 @@ def history():
              input=row[1], 
              output=row[2], 
              timestamp=format_time(row[3]), 
-             filename=row[4])
+             filename=row[4],
+             performance=row[5],
+             input_percent=row[6])
         for row in cursor.fetchall()
     ]
     return render_template("history.html", past_conversions=result, page_name="History")
@@ -51,10 +53,20 @@ def output():
     conn = db_connection()
     cursor = conn.cursor()
 
-    # Initialize from form, run summarizer and or audio creator
+    # Initialize input data from request.form
     input = request.form.get("input")
     create_audio = request.form.get("audio") == "on"
-    output = converter.auto_summary(input)
+    percentage = request.form.get("percentage")
+
+    # Summarisation style based on input
+    if percentage:
+        percentage = int(percentage)/100
+        output = converter.summary(input, percentage)
+    else:
+        output = converter.summary(input)
+    performance = round((len(output) / len(input)) * 100, 2)
+
+    # Creation of audio if specified
     timestamp = int(datetime.now().timestamp())
     if create_audio:
         filename = f'audio_{timestamp}'
@@ -65,10 +77,10 @@ def output():
     
     # Update database
     query = """
-            INSERT INTO conversions (input, output, timestamp, audio)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO conversions (input, output, timestamp, audio, performance, input_percent)
+            VALUES (?, ?, ?, ?, ?, ?)
         """
-    cursor.execute(query, (input, output, timestamp, filename))
+    cursor.execute(query, (input, output, timestamp, filename, performance, int(percentage*100)))
     conn.commit()
     return render_template("output.html", input=input, filename=filename, output=output, timestamp=format_time(timestamp), page_name="Output")
     
@@ -91,6 +103,11 @@ def delete(id):
     cursor.execute(query, (id,))
     conn.commit()
     return redirect("/history")
+
+@app.route("/testing", methods=["POST"])
+def test():
+    print(request.form)
+    return request.form
 
 if __name__ == "__main__":
     app.run(debug=True)

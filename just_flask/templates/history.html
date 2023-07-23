@@ -21,6 +21,10 @@
                 </a>
             </audio>
         {% endif %}
+        <p><b>Percentage of Original:</b> {{ conv.performance }}%</p>
+        {% if conv.input_percent %}
+            <p><b>Target Percentage of Original:</b> {{ conv.input_percent }}%</p>
+        {% endif %}
         <p><b>Converted on:</b> {{ conv.timestamp }}</p>
 
         <!-- Button trigger modal for delete -->
