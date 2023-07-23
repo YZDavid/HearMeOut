@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Summarize Text</h1>
+    <h1>Text Summariser</h1>
     <br>
     <div class="container">
-        <form class="row g-3" action="/output" id="input" method="post">
+        <form class="row g-3" action="/summarise" id="input" method="post">
 
             <!-- Collapsible settings component -->
             <p>
@@ -25,14 +25,14 @@
                     <b>Summariser Settings</b>
                     <p>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="summariseType" id="summariseType1" onclick="document.getElementById('percentage').disabled = true;" checked>
-                            <label class="form-check-label" for="summariseType1">
+                            <input class="form-check-input" type="radio" name="autoSummarise" id="autoSummarise" checked>
+                            <label class="form-check-label" for="autoSummarise">
                               Auto Summarise
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="summariseType" id="summariseType2" onclick="document.getElementById('percentage').disabled = false;">
-                            <label class="form-check-label" for="summariseType2">
+                            <input class="form-check-input" type="radio" name="percentSummarise" id="percentSummarise">
+                            <label class="form-check-label" for="percentSummarise">
                               Percentage of Original
                             </label>
                         </div>

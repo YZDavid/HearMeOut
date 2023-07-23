@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>URL Summariser</h1>
+    <p class="fs-5">
+        Take note that this URL summariser works best on articles with clear and straightforward content, such as news articles. Blog posts and Wikipedia articles can also work.
+        Do also note this will generate a shorter summary.
+    </p>
+    <br>
+    <div class="container">
+        <form class="row g-3" action="/url_summarise" id="input" method="post">
+
+            <!-- Collapsible settings component -->
+            <p>
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="bi bi-gear-fill"></span>&nbsp;Settings
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="col-md-6">
+                    <div class="card card-body">
+                    <b>Audio options</b>
+                    <p>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="audio" name="audio" checked>
+                            <label class="form-check-label" for="audio" name="audio">Generate Audio File</label>
+                        </div>
+                    </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End of collapse component -->
+
+            <div class="col-md-12">
+                <label for="url_input" class="form-label"><b>Enter URL:</b></label>
+                <textarea class="form-control" name="url_input" id="url_input" rows="2" required></textarea>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Summarise »</button>
+            </div>
+        </form>
+        {% if error %}
+        <br>
+        <p class="fs-6" id="urlError">
+            Invalid Link. Please check the link and try again.
+        </p>
+        {% endif %}
+    </div>
+{% endblock %}

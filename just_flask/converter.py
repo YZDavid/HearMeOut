@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import nltk
 from gtts import gTTS
+from newspaper import Article
 
 checkpoint = "facebook/bart-large-cnn"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
@@ -39,6 +40,7 @@ def summary(text, percentage=None):
     output = []
     for i in range(len(tokens)):
         if percentage:
+            percentage = percentage / 100
             min_len = int(chunks_len[i]*percentage)
             max_len = int(min_len*1.1)
             generated = model.generate(**tokens[i], min_length = min_len, max_length = max_len)
@@ -46,6 +48,14 @@ def summary(text, percentage=None):
             generated = model.generate(**tokens[i])
         output.append(tokenizer.decode(*generated, skip_special_tokens=True))
     return ' '.join(output)
+
+def url_summary(url):
+    article = Article(url)
+    article.download()
+    article.parse()
+    original_length = len(article.text)
+    article.nlp()
+    return (original_length, article.summary)
 
 def make_audio(text, filepath):
     tts_file = gTTS(text, lang="en")

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Latest Summary</h1>
+<hr>
+{% if summary is not none %}
+<div>
+    <div>
+        {% if summary.method == "text" %}
+            <h4>Input</h4>
+            <div style="white-space: pre-wrap;">{{ summary.input }}</div>
+        {% endif %}
+        {% if summary.method == "url" %}
+            <h4>URL Input</h4>
+            <a href="{{ summary.input }}" target="_blank">{{ summary.input }}</a>
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        <h4>Output</h4>
+        <div style="white-space: pre-wrap;">{{ summary.output }}</div>
+    </div>
+    <br>
+    <div>
+        {% if summary.audio %}
+            <h4>Audio</h4>
+            <audio controls src="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
+                    <a href="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
+                        Download audio
+                    </a>
+            </audio>
+        {% endif %}
+    </div>
+    <br>
+    <p><b>Percentage of Original:</b> {{ summary.performance }}%</p>
+    {% if summary.input_percent %}
+        <p><b>Target Percentage of Original:</b> {{ summary.input_percent }}%</p>
+    {% endif %}
+    <p><b>Converted on:</b> {{ summary.timestamp }}</p>
+</div>
+{% endif %}
+{% if summary is none %}
+<div>
+    <p>No previous summaries.</p>
+    <a type="submit" class="btn btn-primary" href="/summariser">Get Started</a>
+</div>
+{% endif %}
+{% endblock %}

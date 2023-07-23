@@ -6,6 +6,8 @@ import os
 
 app = Flask(__name__)
 
+DATABASE_COLS = ("id", "input", "output", "timestamp", "audio", "performance", "input_percent", "method")
+
 def db_connection():
     conn = None
     try:
@@ -30,25 +32,58 @@ def about():
 def summariser():
     return render_template("summariser.html", page_name="Summariser")
 
+@app.route("/url_summariser")
+def url_summariser():
+    return render_template("url_summariser.html", page_name="URL Summariser")
+
+@app.route("/latest")
+def output():
+    conn = db_connection()
+    cursor = conn.cursor()  
+    query = """
+            SELECT * FROM conversions
+            ORDER BY timestamp DESC
+            LIMIT 1
+        """
+    res = cursor.execute(query)
+    summary = res.fetchone()
+    if summary == None:
+        return render_template('latest.html', summary=None, page_name="Latest")
+    
+    result = dict()
+    for i in range(len(summary)):
+        field = DATABASE_COLS[i]
+        if field == 'timestamp':
+            result[field] = format_time(summary[i])
+        else:
+            result[field] = summary[i]
+    
+    return render_template("latest.html", summary=result, page_name = "Latest")
+
+
 @app.route("/history")
 def history():
     conn = db_connection()
     cursor = conn.cursor()  
-    cursor.execute('SELECT * FROM conversions')
-    result = [
-        dict(id=row[0], 
-             input=row[1], 
-             output=row[2], 
-             timestamp=format_time(row[3]), 
-             filename=row[4],
-             performance=row[5],
-             input_percent=row[6])
-        for row in cursor.fetchall()
-    ]
-    return render_template("history.html", past_conversions=result, page_name="History")
+    query = """
+            SELECT * FROM conversions
+            ORDER BY timestamp DESC
+        """
+    cursor.execute(query)
+    result = []
+    for row in cursor.fetchall():
+        d = dict()
+        for i in range(len(row)):
+            field = DATABASE_COLS[i]
+            if field == "timestamp":
+                d[field] = format_time(row[i])
+            else:
+                d[field] = row[i]
+        result.append(d)
+    return render_template("history.html", past_summaries=result, page_name="History")
 
-@app.route("/output", methods=["POST", "GET"])
-def output():
+@app.route("/summarise", methods=["POST"])
+def summarise():
     # Connect to database
     conn = db_connection()
     cursor = conn.cursor()
@@ -60,7 +95,7 @@ def output():
 
     # Summarisation style based on input
     if percentage:
-        percentage = int(percentage)/100
+        percentage = int(percentage)
         output = converter.summary(input, percentage)
     else:
         output = converter.summary(input)
@@ -75,14 +110,69 @@ def output():
     else:
         filename = None
     
-    # Update database
+    # Update database, note that database does not need an ID as it will be auto-assigned
     query = """
-            INSERT INTO conversions (input, output, timestamp, audio, performance, input_percent)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO conversions
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
-    cursor.execute(query, (input, output, timestamp, filename, performance, int(percentage*100)))
+    database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
+    cursor.execute(query, database_input)
     conn.commit()
-    return render_template("output.html", input=input, filename=filename, output=output, timestamp=format_time(timestamp), page_name="Output")
+
+    # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
+    timestamp = format_time(timestamp)
+    database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
+    result = dict()
+    for i in range(len(database_input)):
+        field = DATABASE_COLS[i]
+        result[field] = database_input[i]
+    
+    return render_template("latest.html", summary=result, page_name="Output")
+
+@app.route("/url_summarise", methods=["POST"])
+def url_summarise():
+    # Connect to database
+    conn = db_connection()
+    cursor = conn.cursor()
+
+    # Initialize input data from request.form
+    input = request.form.get("url_input")
+    create_audio = request.form.get("audio") == "on"
+
+    # Call Summarisation function
+    try:
+        original_len, output = converter.url_summary(input)
+    except:
+        return render_template("url_summariser.html", error=True, page_name="URL Summariser")
+    performance = round((len(output) / original_len) * 100, 2)
+
+    # Creation of audio if specified
+    timestamp = int(datetime.now().timestamp())
+    if create_audio:
+        filename = f'audio_{timestamp}'
+        filepath = f'static/audio/{filename}.mp3'
+        converter.make_audio(output, filepath=filepath)
+    else:
+        filename = None
+    
+    # Update database, note that database does not need an ID as it will be auto-assigned
+    query = """
+            INSERT INTO conversions
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+    database_input = (None, input, output, timestamp, filename, performance, None, "url")
+    cursor.execute(query, database_input)
+    conn.commit()
+
+    # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
+    timestamp = format_time(timestamp)
+    database_input = (None, input, output, timestamp, filename, performance, None, "url")
+    result = dict()
+    for i in range(len(database_input)):
+        field = DATABASE_COLS[i]
+        result[field] = database_input[i]
+    
+    return render_template("latest.html", summary=result, page_name="Output")
     
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -106,8 +196,9 @@ def delete(id):
 
 @app.route("/testing", methods=["POST"])
 def test():
-    print(request.form)
-    return request.form
+    url = request.form.get('input')
+    result = converter.news_summary(url)
+    return result
 
 if __name__ == "__main__":
     app.run(debug=True)

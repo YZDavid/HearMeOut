@@ -3,29 +3,37 @@
 {% block content %}
     <h1>Previous Summaries</h1>
     <hr>
-    {% if past_conversions|length == 0 %}
+    {% if past_summaries|length == 0 %}
     <div>
         <p>No previous summaries.</p>
         <a type="submit" class="btn btn-primary" href="/summariser">Get Started</a>
     </div>
     {% endif %}
-    {% for conv in past_conversions %}
+    {% for summary in past_summaries %}
     <div>
-        <p><b>Input:</b> {{ conv.input }}</p>
-        <p><b>Output:</b> {{ conv.output }}</p>
-        {% if conv.filename %}
+        {% if summary.method == "text" %}
+            <p><b>Input:</b> {{ summary.input }}</p>
+        {% endif %}
+        {% if summary.method == "url" %}
+            <p><b>URL Input:</b> <a href="{{ summary.input }}" target="_blank">{{ summary.input }}</a></p>
+        {% endif %}
+        <p><b>Output:</b> {{ summary.output }}</p>
+        {% if summary.audio %}
             <p><b>Audio:</b></p>
-            <audio controls src="{{ url_for('static', filename='audio/') }}{{ conv.filename }}.mp3">
-                <a href="{{ url_for('static', filename='audio/') }}{{ conv.filename }}.mp3">
+            <audio controls src="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
+                <a href="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
                     Download audio
                 </a>
             </audio>
         {% endif %}
-        <p><b>Percentage of Original:</b> {{ conv.performance }}%</p>
-        {% if conv.input_percent %}
-            <p><b>Target Percentage of Original:</b> {{ conv.input_percent }}%</p>
+        <p><b>Percentage of Original:</b> {{ summary.performance }}%</p>
+        {% if summary.input_percent %}
+            <p><b>Target Percentage of Original:</b> {{ summary.input_percent }}%</p>
         {% endif %}
-        <p><b>Converted on:</b> {{ conv.timestamp }}</p>
+        {% if summary.input_percent is none %}
+            <p><b>Target Percentage of Original:</b> NIL (Auto/URL Summary)</p>
+        {% endif %}
+        <p><b>Converted on:</b> {{ summary.timestamp }}</p>
 
         <!-- Button trigger modal for delete -->
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
@@ -46,7 +54,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a type="button" class="btn btn-danger" href="/delete/{{ conv.id }}">Delete</a>
+                <a type="button" class="btn btn-danger" href="/delete/{{ summary.id }}">Delete</a>
                 </div>
             </div>
             </div>

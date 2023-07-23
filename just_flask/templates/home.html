@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="jumbotron text-center">
-    <h1 class="display-4">HearMeOut</h1>
-    <p class="lead">Summarise long chunks of text with just a click of a button</p>
-    <hr class="my-4">
-    <p>Orbital Project by David and Davidson</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/summariser" role="button">Get Started</a>
-    </p>
+{% for i in range(3) %}
+<br>
+{% endfor %}
+<div class="container">
+    <div class="p-5 mb-4 bg-dark rounded-3 text-center" id="homeJumbo">
+        <div class="container-fluid py-5">
+            <h1 class="display-3 fw-bold"><img src="{{ url_for('static', filename='HearMeOutLogo.png') }}" id="logo">HearMeOut</h1>
+            <p class="fs-4">Summarise long chunks of text with just a click of a button</p>
+            <hr class="my-4">
+            <p class="lead">Orbital Project by David and Davidson</p>
+            <a class="btn btn-outline-light btn-lg" type="button" href="/summariser">Get Started</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
