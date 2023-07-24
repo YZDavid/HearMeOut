@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Previous Summaries</h1>
+    <hr>
+    {% if past_summaries|length == 0 %}
+    <div>
+        <p>No previous summaries.</p>
+        <a type="submit" class="btn btn-primary" href="/summariser">Get Started</a>
+    </div>
+    {% endif %}
+    {% for summary in past_summaries %}
+    <div>
+        {% if summary.method == "text" %}
+            <p><b>Input:</b> {{ summary.input }}</p>
+        {% endif %}
+        {% if summary.method == "url" %}
+            <p><b>URL Input:</b> <a href="{{ summary.input }}" target="_blank">{{ summary.input }}</a></p>
+        {% endif %}
+        <p><b>Output:</b> {{ summary.output }}</p>
+        {% if summary.audio %}
+            <p><b>Audio:</b></p>
+            <audio controls src="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
+                <a href="{{ url_for('static', filename='audio/') }}{{ summary.audio }}.mp3">
+                    Download audio
+                </a>
+            </audio>
+        {% endif %}
+        <p><b>Percentage of Original:</b> {{ summary.performance }}%</p>
+        {% if summary.input_percent %}
+            <p><b>Target Percentage of Original:</b> {{ summary.input_percent }}%</p>
+        {% endif %}
+        {% if summary.input_percent is none %}
+            <p><b>Target Percentage of Original:</b> NIL (Auto/URL Summary)</p>
+        {% endif %}
+        <p><b>Converted on:</b> {{ summary.timestamp }}</p>
+
+        <!-- Button trigger modal for delete -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ summary.id }}">
+            <span class="bi bi-trash3-fill"></span>&nbsp;Delete
+        </button>
+        
+        <!-- Modal to delete -->
+        <div class="modal fade" id="deleteModal{{ summary.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModal{{ summary.id }}Title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal{{ summary.id }}Title">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+                </div>
+                <div class="modal-body">
+                Do you want to delete this summary?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a type="button" class="btn btn-danger" href="/delete/{{ summary.id }}">Delete</a>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock %}
