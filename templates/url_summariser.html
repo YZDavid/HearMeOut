@@ -40,10 +40,16 @@
                 <button type="submit" class="btn btn-primary">Summarise »</button>
             </div>
         </form>
-        {% if error %}
+        {% if error == 404 %}
         <br>
-        <p class="fs-6" id="urlError">
+        <p class="fs-6 errorMsg" id="urlError">
             Invalid Link. Please check the link and try again.
+        </p>
+        {% endif %}
+        {% if error == 0 %}
+        <br>
+        <p class="fs-6 errorMsg" id="parseError">
+            Could not parse text from link. You can try the <a href="/summariser">text summariser</a> instead.
         </p>
         {% endif %}
     </div>

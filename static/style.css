@@ -23,7 +23,7 @@ textarea#input{
     background-color: #FFFFFF;
 }
 
-p#urlError{
+.errorMsg{
     color: #dc3545;
 }
 

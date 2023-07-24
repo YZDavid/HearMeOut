@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect
 from datetime import datetime
+from pathlib import Path
 import converter
 import sqlite3
 import os
+
+# Initialize audio directory
+if not Path("./static/audio").exists():
+    Path.mkdir("./static/audio")
 
 app = Flask(__name__)
 
@@ -118,16 +123,17 @@ def summarise():
     database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
     cursor.execute(query, database_input)
     conn.commit()
+    return redirect("/latest")
 
     # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
-    timestamp = format_time(timestamp)
-    database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
-    result = dict()
-    for i in range(len(database_input)):
-        field = DATABASE_COLS[i]
-        result[field] = database_input[i]
+    # timestamp = format_time(timestamp)
+    # database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
+    # result = dict()
+    # for i in range(len(database_input)):
+    #     field = DATABASE_COLS[i]
+    #     result[field] = database_input[i]
     
-    return render_template("latest.html", summary=result, page_name="Output")
+    # return render_template("latest.html", summary=result, page_name="Output")
 
 @app.route("/url_summarise", methods=["POST"])
 def url_summarise():
@@ -143,7 +149,9 @@ def url_summarise():
     try:
         original_len, output = converter.url_summary(input)
     except:
-        return render_template("url_summariser.html", error=True, page_name="URL Summariser")
+        return render_template("url_summariser.html", error=404, page_name="URL Summariser")
+    if original_len == 0 or len(output) == 0:
+        return render_template("url_summariser.html", error=0, page_name="URL Summariser")
     performance = round((len(output) / original_len) * 100, 2)
 
     # Creation of audio if specified
@@ -164,15 +172,17 @@ def url_summarise():
     cursor.execute(query, database_input)
     conn.commit()
 
+    return redirect("/latest")
+
     # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
-    timestamp = format_time(timestamp)
-    database_input = (None, input, output, timestamp, filename, performance, None, "url")
-    result = dict()
-    for i in range(len(database_input)):
-        field = DATABASE_COLS[i]
-        result[field] = database_input[i]
+    # timestamp = format_time(timestamp)
+    # database_input = (None, input, output, timestamp, filename, performance, None, "url")
+    # result = dict()
+    # for i in range(len(database_input)):
+    #     field = DATABASE_COLS[i]
+    #     result[field] = database_input[i]
     
-    return render_template("latest.html", summary=result, page_name="Output")
+    # return render_template("latest.html", summary=result, page_name="Output")
     
 @app.route("/delete/<int:id>")
 def delete(id):
