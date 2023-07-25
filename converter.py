@@ -13,6 +13,9 @@ except LookupError:
 MAX_LENGTH = tokenizer.max_len_single_sentence
 
 def summary(text, percentage=None):
+    # If percentage was passed in, set it as a floating value from 0.05 to 0.95
+    if percentage:
+        percentage = percentage / 100
     sentences = nltk.tokenize.sent_tokenize(text)
     length = 0
     chunk = ""
@@ -38,9 +41,9 @@ def summary(text, percentage=None):
 
     tokens = [tokenizer(chunk, return_tensors="pt") for chunk in chunks]
     output = []
+    
     for i in range(len(tokens)):
         if percentage:
-            percentage = percentage / 100
             min_len = int(chunks_len[i]*percentage)
             max_len = int(min_len*1.1)
             generated = model.generate(**tokens[i], min_length = min_len, max_length = max_len)
