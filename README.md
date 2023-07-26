@@ -7,9 +7,10 @@ NUS 22/23 Orbital Project
 With the help of Artificial Intelligence Tools, large chunks of texts can be easily converted into smaller bite sized instead. In addition, it also enables users to have the option of hearing the summarized text instead. This is done with the help of libraries such as **`Hugging Face's Transformers`**, **`NLTK (Natural Language Toolkit)`** and  **`gTTS (Google Text-to-Speech)`**
 
 ## Installation
-### 0. Ensure `Python` is already installed on your system.
+### 0. Ensure `Python` and `Git` is already installed on your system.
 
 * `Python` installation for [Windows/Mac/Linux](https://www.python.org/downloads/)
+* `Git` installation for [Windows/Mac/Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ### 1. Download a copy of this repo
 
@@ -24,7 +25,8 @@ Get inside the workspace of the folder:
 ```
 cd HearMeOut
 ```
-Setup a virtual environment with the following command 
+Setup a virtual environment with the following command  
+\
 For **Windows**:
 ```
 python -m venv venv
@@ -33,16 +35,22 @@ For **Mac**:
 ```
 python3 -m venv venv
 ```
+\
 Note that as of writing this README, The app is running on `Python 3.11.3`. If there is any issues with Python versions and the dependencies listed in `requirements.txt`,
 you may consider looking into creating virtual environments with specified Python versions. You can look into the Python library [virtualenv](https://virtualenv.pypa.io/en/latest/)
 if you need specific Python versions.
 
 ### 3. Activate the virtual environment
 
-Activate the virtual environment by running the following command
+Activate the virtual environment by running the following command  
+\
 For **Windows**:
 ```
 venv/Scripts/activate
+```
+Alternatively:
+```
+venv\\Scripts\\activate
 ```
 For **Mac**:
 ```
@@ -60,15 +68,22 @@ pip install -r requirements.txt
 ### 5. Launch application
 
 Finally, launch the application by running the python program server.py
+
+For **Windows**:
 ```
 python server.py
 ```
+For **Mac**:
+```
+python3 server.py
+```
+
 
 ## Usage
 ### 1. Accessing the website
 
 Ensure that the server is running after you have launched the program with `python server.py`.\
-It will be hosted on `127.0.0.1:5000` (localhost port 5000) and you will be able to access it on the browser if it is running.
+It will be hosted on `http://127.0.0.1:5000` (localhost port 5000) and you will be able to access it on a browser of your choice as long as the server is running.
 
 ### 2. Summarising text
 
@@ -76,7 +91,8 @@ Click on "Get Started" and you will be taken to the `Text Summariser` page. You 
 * Audio: Chooses whether audio file is generated
 * Auto: Let the summariser automatically generate the output
 * Percentage of Original: Set a target % to how long you want your summary to be compared to the original file
-Simply enter a chunk of text you want summarised inside the input text box.  
+Simply enter a chunk of text you want summarised inside the input text box. 
+
 Once done, click on summarise to generate a summary of the input text. **Do note that it will take awhile**
 
 ### 3. Summarising URLs
@@ -84,6 +100,7 @@ Once done, click on summarise to generate a summary of the input text. **Do note
 You can access this via the navbar on top, click on `Summarisers > URL Summariser` to access the page. Similarly, you may click on the settings option to change the output settings.
 * Audio: Chooses whether audio file is generated
 Simply enter a valid URL link to a news article or any parseable webpage, and it will attempt to summarise the page for you. The ability of this function really depends on the website.  
+
 Once done, click on summarise to generate a summary of the input text.
 
 ### 4. Latest Summary
