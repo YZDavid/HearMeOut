@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request, url_for, redirect
 from datetime import datetime
-from pathlib import Path
 import converter
 import sqlite3
 import os
 
 # Initialize audio directory
-if not Path("./static/audio").exists():
-    Path.mkdir("./static/audio")
+if not os.path.exists("static/audio"):
+    os.makedirs("static/audio")
 
 app = Flask(__name__)
 
