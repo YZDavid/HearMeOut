@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for i in range(3) %}
-<br>
-{% endfor %}
-<div class="container">
+<div class="wrapper">
     <div class="p-5 mb-4 bg-dark rounded-3 text-center" id="homeJumbo">
         <div class="container-fluid py-5">
             <h1 class="display-3 fw-bold"><img src="{{ url_for('static', filename='HearMeOutLogo.png') }}" id="logo">HearMeOut</h1>

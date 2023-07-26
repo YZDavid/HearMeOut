@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>
+<br>
+<div class="container mt-5">
     <h1>Previous Summaries</h1>
     <hr>
     {% if past_summaries|length == 0 %}
@@ -63,4 +66,5 @@
     </div>
     <hr>
     {% endfor %}
+</div>
 {% endblock %}
