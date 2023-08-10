@@ -8,17 +8,17 @@
     <div>
         {% if summary.method == "text" %}
             <h4>Input</h4>
-            <div style="white-space: pre-wrap;">{{ summary.input }}</div>
+            <div style="white-space: pre-wrap;" id="input">{{ summary.input }}</div>
         {% endif %}
         {% if summary.method == "url" %}
             <h4>URL Input</h4>
-            <a href="{{ summary.input }}" target="_blank">{{ summary.input }}</a>
+            <a href="{{ summary.input }}" target="_blank" id="input">{{ summary.input }}</a>
         {% endif %}
     </div>
     <br>
     <div>
         <h4>Output</h4>
-        <div style="white-space: pre-wrap;">{{ summary.output }}</div>
+        <div style="white-space: pre-wrap;" id="output">{{ summary.output }}</div>
     </div>
     <br>
     <div>

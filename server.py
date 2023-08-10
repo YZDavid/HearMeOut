@@ -125,16 +125,6 @@ def summarise():
     conn.commit()
     return redirect("/latest")
 
-    # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
-    # timestamp = format_time(timestamp)
-    # database_input = (None, input, output, timestamp, filename, performance, percentage, "text")
-    # result = dict()
-    # for i in range(len(database_input)):
-    #     field = DATABASE_COLS[i]
-    #     result[field] = database_input[i]
-    
-    # return render_template("latest.html", summary=result, page_name="Output")
-
 @app.route("/url_summarise", methods=["POST"])
 def url_summarise():
     # Connect to database
@@ -173,16 +163,6 @@ def url_summarise():
     conn.commit()
 
     return redirect("/latest")
-
-    # Create dictionary object to pass to render template. Note that timestamp is changed to human readable format.
-    # timestamp = format_time(timestamp)
-    # database_input = (None, input, output, timestamp, filename, performance, None, "url")
-    # result = dict()
-    # for i in range(len(database_input)):
-    #     field = DATABASE_COLS[i]
-    #     result[field] = database_input[i]
-    
-    # return render_template("latest.html", summary=result, page_name="Output")
     
 @app.route("/delete/<int:id>")
 def delete(id):
